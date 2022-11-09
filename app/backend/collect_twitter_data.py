@@ -47,13 +47,10 @@ def convert_pruned_tweet_data_to_pandas(pruned_tweet_data: List[List], headers: 
     return df 
      
 
-def convert_pandas_to_csv(df, output_path: str) -> None:
-    df.to_csv(output_path, index=False) 
-
 def main():
     authentication = auth()
     keyword, tweets_per_page, pages = "NBA Youngboy", 20, 5
     tweepy_status_tweets = get_tweets_from_api(authentication, keyword, tweets_per_page, pages)
     pruned_tweet_data = prune_tweet_data(tweepy_status_tweets)
     df = convert_pruned_tweet_data_to_pandas(pruned_tweet_data, ["username", "tweet_text", "created_at", "retweet_count", "favorite_count"])
-    convert_pandas_to_csv(df, "unprocessed_tweets.csv")
+    df.to_csv("unprocessed_tweets.csv", index=False)
